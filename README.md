@@ -25,3 +25,13 @@ def test_first_two_letters():
 def test_first_two_numbers():
     return test_first_two(0, 1)
 ```
+
+# Name
+A 'dado' in woodworking is "a groove cut in the face of a board, into which the edge of another board is fixed."
+
+This decorator lets you define a test function into which you fit test data to get the tests you actually want to run.
+
+Plus, 'dado' is much easier to say and remember than 'data-driven-test-decorator', while still keeping some phonetic
+similarity.
+
+Naming credit goes to @soapko :-)
