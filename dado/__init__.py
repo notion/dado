@@ -28,5 +28,9 @@ Namer: soapko
 from .dado import data_driven
 
 
+# [ Version ]
+__version__ = '0.1.0'
+
+
 # [ Prospector ]
 assert data_driven
