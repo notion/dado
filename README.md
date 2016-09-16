@@ -34,4 +34,4 @@ This decorator lets you define a test function into which you fit test data to g
 Plus, 'dado' is much easier to say and remember than 'data-driven-test-decorator', while still keeping some phonetic
 similarity.
 
-Naming credit goes to @soapko :-)
+Naming credit goes to [soapko](https://github.com/soapko) :-)
