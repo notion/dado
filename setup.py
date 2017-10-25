@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 # [ Main ]
 setup(
     name='dado',
-    version='0.1.1',
+    version='0.1.2',
     description='Dado: Data Driven Test Decorator.',
     url='https://github.com/notion/dado',
     author='toejough',

@@ -28,6 +28,7 @@ Namer: soapko
 import sys
 from functools import partial
 import inspect
+import types
 
 
 # [ Interactors ]
@@ -61,7 +62,10 @@ def dd_decorator(names, test_dict, test, build_test=build_test, get_module=get_m
     """
     for suffix, args in test_dict.items():
         new_test, new_name = build_test(test, suffix, names, args)
-        setattr(get_module(), new_name, new_test)
+        new_test.__name__ = new_name
+        new_test.__code__ = types.SimpleNamespace()
+        new_test.__code__.co_filename = test.__code__.co_filename
+        get_module().__dict__[new_name] = new_test
     # return None so that the original function will be overwritten
     # by a non-callable, and therefor will be ignored by foot.
     return None
