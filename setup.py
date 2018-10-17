@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 # [ Main ]
 setup(
     name='dado',
-    version='0.1.2',
+    version='0.1.3',
     description='Dado: Data Driven Test Decorator.',
     url='https://github.com/notion/dado',
     author='toejough',
@@ -30,10 +30,8 @@ setup(
             # Specify the Python versions you support here. In particular, ensure
             # that you indicate whether you support Python 2, Python 3 or both.
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.7',
     ],
     keywords="data-driven test decorator",
-    packages=find_packages(),
-    install_requires=[],
-    entry_points={}
+    py_modules=['dado'],
 )
