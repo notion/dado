@@ -31,9 +31,19 @@ import inspect
 import types
 
 
+# [ Exports ]
+__all__ = ['data_driven']
+
+
+def __dir__():
+    return sorted(__all__)
+
+
 # [ Interactors ]
-def get_module(level=2, get_stack=inspect.stack, module_dict=sys.modules):
+def get_module(level=2, get_stack=inspect.stack, module_dict=None):
     """Get the module <level> levels up the call stack."""
+    if module_dict is None:
+        module_dict = sys.modules
     frames = get_stack()
     caller_frame = frames[level].frame
     caller_module_name = caller_frame.f_globals['__name__']
@@ -65,7 +75,7 @@ def dd_decorator(names, test_dict, test, build_test=build_test, get_module=get_m
         new_test.__name__ = new_name
         new_test.__code__ = types.SimpleNamespace()
         new_test.__code__.co_filename = test.__code__.co_filename
-        get_module().__dict__[new_name] = new_test
+        setattr(get_module(), new_name, new_test)
     # return None so that the original function will be overwritten
     # by a non-callable, and therefor will be ignored by foot.
     return None
