@@ -1,0 +1,24 @@
+# like [ Heading ]
+^\s*#\s*\[ .+ ]$
+
+# pylint
+pylint: (?:en|dis)able=
+
+# sentences ending with a period or ellipsis
+(?:\.|\.{3})$
+(?:\.|\.{3})\s+
+
+# lines that have no spaces after the comment
+^\s*#\s*\S+$
+
+# 4 words
+(?:\w+ ){3,}\w+
+
+# examples
+\s*#\s*(?:[Ee]xample|[Ll]ike):?
+
+# example code/code-like lines
+\s*#\|
+
+# XXX
+XXX

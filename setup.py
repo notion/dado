@@ -1,15 +1,14 @@
 """Setup for dado."""
 
 
-# [ Imports ]
-# [ -Python ]
-from setuptools import setup, find_packages
+# [ Imports:Third Party ]
+import setuptools  # type: ignore
 
 
 # [ Main ]
-setup(
+setuptools.setup(
     name='dado',
-    version='0.1.3',
+    version='0.1.4',
     description='Dado: Data Driven Test Decorator.',
     url='https://github.com/notion/dado',
     author='toejough',
@@ -33,5 +32,43 @@ setup(
             'Programming Language :: Python :: 3.7',
     ],
     keywords="data-driven test decorator",
-    py_modules=['dado'],
+    packages=setuptools.find_packages(),
+    package_data={
+        'dado': ['py.typed'],
+    },
+    install_requires=[],
+    extras_require={
+        'test': [
+            'bandit',  # no-import: standalone bin
+            'better_exceptions',
+            'blessed',
+            'click',
+            'flake8-assertive',  # no-import: plugin
+            'flake8-author',  # no-import: plugin
+            'flake8-blind-except',  # no-import: plugin
+            'flake8-bugbear',  # no-import: plugin
+            'flake8-builtins-unleashed',  # no-import: plugin
+            'flake8-commas',  # no-import: plugin
+            'flake8-comprehensions',  # no-import: plugin
+            'flake8-copyright',  # no-import: plugin
+            'flake8-debugger',  # no-import: plugin
+            'flake8-docstrings',  # no-import: plugin
+            'flake8-double-quotes',  # no-import: plugin
+            'flake8-expandtab',  # no-import: plugin
+            'flake8-imports',  # no-import: plugin
+            'flake8-logging-format',  # no-import: plugin
+            'flake8-mutable',  # no-import: plugin
+            'flake8-pep257',  # no-import: plugin
+            'flake8-self',  # no-import: plugin
+            'flake8-single-quotes',  # no-import: plugin
+            'flake8-super-call',  # no-import: plugin
+            'flake8-tidy-imports',  # no-import: plugin
+            'flake8-todo',  # no-import: plugin
+            'flake8',  # no-import: standalone bin
+            'mypy',  # no-import: standalone bin
+            'pylint',  # no-import: standalone bin
+            'pipe',
+            'vulture',  # no-import: standalone bin
+        ],
+    },
 )
