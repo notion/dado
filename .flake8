@@ -1,0 +1,25 @@
+[flake8]
+# lenient line length
+max-line-length = 120
+
+# ignore specific rules
+ignore =
+    # ignore strict line length rule
+    E501,
+    # forget inline quotes, because apostrophes are a thing in user strings, but
+    # I want single quotes in non-user strings (like dictionary keys)
+    Q000,
+    # One liners can be lambda's.  making such a small function is dumb.
+    E731,
+    # Pylint already catches bare excepts
+    E722,
+    # XXX I don't have a project yet anywhere, so todos are going to be a thing
+    T000,
+    # Inits are all the same - documenting them is dumb
+    D107,
+    # magic methods are all the same - documenting them is dumb
+    D105,
+    # not understanding the deferred annotations stuff from python 3.7.0
+    F821,
+    # comments around binary logic are fine
+    W504,

@@ -1,0 +1,4 @@
+[bandit]
+exclude: test
+# B322 - input is fine - only running on python3
+skips: B322

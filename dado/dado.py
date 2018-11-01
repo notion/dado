@@ -24,23 +24,28 @@ Namer: soapko
 """
 
 
-# [ Imports ]
-import sys
-from functools import partial
+# [ Imports:Python ]
+import functools
 import inspect
+import sys
 import types
+import typing
 
 
 # [ Exports ]
 __all__ = ['data_driven']
 
 
-def __dir__():
+def __dir__() -> typing.Iterable[str]:
     return sorted(__all__)
 
 
 # [ Interactors ]
-def get_module(level=2, get_stack=inspect.stack, module_dict=None):
+def get_module(
+    level: int = 2,
+    get_stack: typing.Callable[[], typing.List[inspect.FrameInfo]] = inspect.stack,
+    module_dict: typing.Optional[typing.Dict[str, types.ModuleType]] = None,
+) -> types.ModuleType:
     """Get the module <level> levels up the call stack."""
     if module_dict is None:
         module_dict = sys.modules
@@ -52,7 +57,12 @@ def get_module(level=2, get_stack=inspect.stack, module_dict=None):
 
 
 # [ Sub-components ]
-def build_test(test, suffix, arg_names, args):
+def build_test(
+    test: typing.Callable,
+    suffix: str,
+    arg_names: typing.Iterable[str],
+    args: typing.Iterable[typing.Any],
+) -> typing.Tuple[typing.Callable, str]:
     """Build data driven tests from original test."""
     # assign the args for this iteration of the test
     # to the given arg names, so there's no ambiguity or ordering
@@ -60,13 +70,19 @@ def build_test(test, suffix, arg_names, args):
     test_name = test.__name__
     kwargs = {k: v for k, v in zip(arg_names, args)}
     new_test_name = '_'.join((test_name, suffix))
-    return partial(test, **kwargs), new_test_name
+    return functools.partial(test, **kwargs), new_test_name
 
 
 # [ Core Components ]
-def dd_decorator(names, test_dict, test, build_test=build_test, get_module=get_module):
+def dd_decorator(
+    names: typing.Iterable[str],
+    test_dict: typing.Dict[str, typing.Iterable[typing.Any]],
+    test: typing.Callable,
+    build_test: typing.Callable = build_test,
+    get_module: typing.Callable = get_module,
+) -> None:
     """
-    A decorator for data-driven tests.
+    Build the data-driven tests.
 
     Builds data-driven tests, sets them to the calling module, and unsets the original test function.
     """
@@ -82,16 +98,10 @@ def dd_decorator(names, test_dict, test, build_test=build_test, get_module=get_m
 
 
 # [ API ]
-def data_driven(names, test_dict, decorator=dd_decorator):
-    """A decorator builder for data-driven tests."""
-    # Could do things this way:
-    #   data_driven = partial(partial, dd_decorator)
-    #     the outer partial returns a partial of a partial with dd_decorator as the first arg
-    #     data_driven(*args) will now call partial(dd_decorator, *args)
-    #     which returns a partial of dd_decorator with *args as the first args.
-    #     whoa terrible:
-    #     - difficult to reason about
-    #     - args are not controlled at the different levels
-    #     - altogether too clever
-    # instead, just return the decorator
-    return partial(decorator, names, test_dict)
+def data_driven(
+    names: typing.Iterable[str],
+    test_dict: typing.Dict[str, typing.Iterable[typing.Any]],
+    decorator: typing.Callable = dd_decorator,
+) -> typing.Callable:
+    """Build the decorator for data-driven tests."""
+    return functools.partial(decorator, names, test_dict)
